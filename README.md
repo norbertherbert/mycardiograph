@@ -1,4 +1,6 @@
-# MyCardiograf - Availability monitoring with UDP heartbeats
+# MyCardiograph
+
+Light-weight availability monitoring solution for embedded Linux systems.
 
 ## Build
 
@@ -14,6 +16,8 @@ cargo build --bin mycardiograph --release
 cargo install cross
 cross build --bin myheart --target=armv7-unknown-linux-gnueabihf --release
 ```
+
+## Use
 
 ### Copy the MyHeart client to your embedded linux system
 
