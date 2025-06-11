@@ -1,6 +1,6 @@
 # MyCardiograph
 
-Light-weight availability monitoring solution for embedded Linux systems.
+Lightweight availability monitoring solution for embedded Linux systems.
 
 ## Install and use
 
