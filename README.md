@@ -15,7 +15,7 @@ Before executing the binary files for monitoring, please check all supported com
 
 ## Installation and setup
 
-The pre-compiled binary files are availeble at [releases](https://github.com/norbertherbert/mycardiograph/releases) section of this repo.
+The pre-compiled binary files are availeble at the [releases](https://github.com/norbertherbert/mycardiograph/releases) section of this repo.
 
 On the monitoring server:
 
@@ -47,14 +47,14 @@ chmod +x myheart
 
 ## Build
 
-Build the MyCardiograph monitoring server for your platform
+Build the MyCardiograph monitoring server for your x86-linux platform
 
 ```bash
 cargo build --bin mycardiograph --release --target x86_64-unknown-linux-gnu
 # cp target/x86_64-unknown-linux-gnu/release/mycardiograph releases/mycardiograph-0.1.0-x86_64-unknown-linux-gnu
 ```
 
-Build the MyHeart monitoring client for ARMv7
+Build the MyHeart monitoring client for armv7-linux platform
 
 ```bash
 cargo install cross
