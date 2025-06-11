@@ -7,9 +7,9 @@ When you compile this code you will get 2 binary files:
 - `mycardiograph` - the monitoring server that is pre-compiled for x86-linux
 - `myheart` - the monitoring client that is pre-compiled for armv7-linux
 
-The client sends periodic heartbeat messages to the server. All messages are encrypted and protected against reply attacs.
+The client sends periodic heartbeat messages to the server. All messages are encrypted and protected against reply attacks.
 
-The server receives heartbeat messages from several clients and logs events/alerts in dayly rotating log files. Log fiiles are stored in the `log` folder that is located in the same folder from where the server was launched.
+The server receives heartbeat messages from several clients and logs events/alerts in daily rotating log files. The log files are stored in the `log` folder that is located in the same folder from where the server was launched.
 
 Before executing the binary files for monitoring, please check all supported command line params with the `--help` command line option.
 
