@@ -1,8 +1,19 @@
 # MyCardiograph
 
-Lightweight availability monitoring solution for embedded Linux systems.
+This is a lightweight availability monitoring solution for embedded Linux systems.
 
-## Install and use
+When you compile this code you will get 2 binary files:
+
+- `mycardiograph` - the monitoring server that is pre-compiled for x86-linux
+- `myheart` - the monitoring client that is pre-compiled for armv7-linux
+
+The client sends periodic heartbeat messages to the server. All messages are encrypted and protected against reply attacs.
+
+The server receives heartbeat messages from several clients and logs events/alerts in dayly rotating log files. Log fiiles are stored in the `log` folder that is located in the same folder from where the server was launched.
+
+## Installation and setup
+
+The pre-compiled binary files are availeble at [releases](https://github.com/norbertherbert/mycardiograph/releases) section of this repo.
 
 On the monitoring server:
 
@@ -33,7 +44,6 @@ chmod +x myheart
 ```
 
 You can check all supported command line params by executing the binary files with the `--help` option.
-
 
 ## Build
 
