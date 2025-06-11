@@ -11,6 +11,8 @@ The client sends periodic heartbeat messages to the server. All messages are enc
 
 The server receives heartbeat messages from several clients and logs events/alerts in dayly rotating log files. Log fiiles are stored in the `log` folder that is located in the same folder from where the server was launched.
 
+Before executing the binary files for monitoring, please check all supported command line params with the `--help` command line option.
+
 ## Installation and setup
 
 The pre-compiled binary files are availeble at [releases](https://github.com/norbertherbert/mycardiograph/releases) section of this repo.
@@ -42,8 +44,6 @@ chmod +x myheart
 # Modify the 'device-id', 'server-ip' and 'password' params according to your environment
 ./myheart --device-id OutdoorAP --server-ip 192.168.1.200 --password asdf
 ```
-
-You can check all supported command line params by executing the binary files with the `--help` option.
 
 ## Build
 
