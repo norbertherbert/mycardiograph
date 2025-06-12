@@ -1,5 +1,5 @@
 [package]
-name = "mycardiograph"
+name = "cardiograph"
 version = "0.1.0"
 edition = "2024"
 authors = ["Norbert Herbert <norbert.herbert@gmail.com>"]
@@ -20,6 +20,8 @@ tracing-appender = "0.2.3"
 tracing-subscriber = { version = "0.3.19", features = ["env-filter", "fmt", "json"] }
 
 derive_more = { version = "2.0.1", features =["from", "display"] }
+sysinfo = { version = "0.35.2", features =[] }
+tokio = { version = "1.45.1", features = ["full"] }
 
 
 [[bin]]

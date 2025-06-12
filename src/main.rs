@@ -1,9 +1,9 @@
-mod logger;
+use cardiograph::HeartbeatMessage;
+use cardiograph::logger;
 
 use aes_gcm::{Aes256Gcm, Key, Nonce};
 use aes_gcm::aead::{Aead, KeyInit};
 use chrono::Utc;
-use serde::Deserialize;
 use std::collections::HashMap;
 use std::net::UdpSocket;
 use std::sync::{Arc, Mutex};
@@ -51,13 +51,6 @@ struct Args {
     /// File log level
     #[arg(long, value_enum, default_value = "debug")]
     file_log_level: logger::LogLevel,
-}
-
-#[derive(Debug, Deserialize)]
-struct HeartbeatMessage {
-    device_id: String,
-    timestamp: i64,
-    heartbeat_interval: u64,
 }
 
 #[derive(Debug)]
@@ -132,9 +125,18 @@ fn main() -> std::io::Result<()> {
                                                     if status.is_up {
 
                                                         tracing::debug!(
-                                                            device_id=heartbeat_message.device_id, 
+                                                            device_id=heartbeat_message.device_id,
                                                             "Heartbeat message:"
                                                         );
+                                                
+                                                        if let Some(ref health_data) = heartbeat_message.health_data {
+                                                            let health_data_json = serde_json::to_string(health_data).unwrap();
+                                                            tracing::trace!(
+                                                                device_id=heartbeat_message.device_id,
+                                                                health_data=%health_data_json,
+                                                                "Healthdata received:",
+                                                            );
+                                                        }
 
                                                     } else {
 
@@ -167,13 +169,22 @@ fn main() -> std::io::Result<()> {
                                                     heartbeat_interval: heartbeat_message.heartbeat_interval,
                                                 });
 
+                                                
                                                 tracing::info!(
-                                                    device_id=heartbeat_message.device_id, 
-                                                    "New device detected:"
+                                                    device_id=heartbeat_message.device_id,
+                                                    "New device detected:",
                                                 );
 
-                                            }
+                                                if let Some(ref health_data) = heartbeat_message.health_data {
+                                                    let health_data_json = serde_json::to_string(health_data).unwrap();
+                                                    tracing::trace!(
+                                                        device_id=heartbeat_message.device_id,
+                                                        health_data=%health_data_json,
+                                                        "Healthdata received:",
+                                                    );
+                                                }
 
+                                            }
 
 
                                         }
@@ -184,7 +195,7 @@ fn main() -> std::io::Result<()> {
                             }
                             Err(_) => tracing::error!(
                                 sender_addr=%addr, 
-                                "Failed to decrypt message:"
+                                "Message received with invalid encryption:"
                             ),
                         }
                     }

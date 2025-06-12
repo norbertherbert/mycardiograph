@@ -1,12 +1,15 @@
+use cardiograph::HeartbeatMessage;
+use cardiograph::health_monitoring::collect_health_data;
+
 use aes_gcm::{Aes256Gcm, Key, Nonce};
 use aes_gcm::aead::{Aead, KeyInit, OsRng, rand_core::RngCore};
-use serde::Serialize;
 use chrono::Utc;
 use std::net::UdpSocket;
-use std::thread;
+use tokio::time;
 use std::time::Duration;
 use clap::Parser;
 use sha2::{Digest, Sha256};
+
 
 #[derive(Parser, Debug)]
 #[command(
@@ -36,16 +39,16 @@ struct Args {
     /// Password used to derive AES-256 key
     #[arg(long)]
     password: String,
+
+    /// Include health data in heartbeats
+    #[arg(long, default_value_t = false)]
+    with_health_data: bool,
+
 }
 
-#[derive(Debug, Serialize)]
-struct HeartbeatMessage {
-    device_id: String,
-    timestamp: i64,
-    heartbeat_interval: u64,
-}
 
-fn main() -> std::io::Result<()> {
+#[tokio::main]
+async fn main() -> std::io::Result<()> {
 
     let args = Args::parse();
     let hash = Sha256::digest(args.password.as_bytes()); // [u8; 32]
@@ -56,15 +59,25 @@ fn main() -> std::io::Result<()> {
 
     let server_addr = format!("{}:{}", &args.server_ip, &args.server_port);
 
-    //  socket.local_addr().ok().map(|addr| addr.ip().to_string());
+    let mut interval = time::interval(Duration::from_secs(args.heartbeat_interval));
 
     loop {
+
+        interval.tick().await;
+
         let timestamp = Utc::now().timestamp_millis(); // e.g. 1718064039123
+
+        let health_data = if args.with_health_data { 
+            Some( collect_health_data().await ) 
+        } else { 
+            None 
+        };
         
         let payload = serde_json::to_string(&HeartbeatMessage{
             device_id: args.device_id.clone(), 
             timestamp,
             heartbeat_interval: args.heartbeat_interval,
+            health_data
         }).unwrap();
 
         let mut nonce_bytes = [0u8; 12];
@@ -82,6 +95,5 @@ fn main() -> std::io::Result<()> {
         socket.send_to(&packet, &server_addr)?;
         println!("✅ Encrypted heartbeat sent to {}", &server_addr);
 
-        thread::sleep(Duration::from_secs(args.heartbeat_interval));
     }
 }
