@@ -15,7 +15,7 @@ Before executing the binary files for monitoring, please check all supported com
 
 ## Installation and setup
 
-The pre-compiled binary files are availeble at the [releases](https://github.com/norbertherbert/cardiograph/releases) section of this repo.
+The pre-compiled binary files are availeble at the [releases](https://github.com/norbertherbert/mycardiograph/releases) section of this repo.
 
 On the monitoring server:
 
