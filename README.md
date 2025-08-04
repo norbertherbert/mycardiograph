@@ -80,14 +80,14 @@ Build the MyCardiograph monitoring server for your x86-linux platform
 
 ```bash
 cargo build --bin cardiograph --release --target x86_64-unknown-linux-gnu
-# cp target/x86_64-unknown-linux-gnu/release/cardiograph releases/cardiograph-0.1.1-x86_64-unknown-linux-gnu
+# cp target/x86_64-unknown-linux-gnu/release/cardiograph releases/cardiograph-0.1.2-x86_64-unknown-linux-gnu
 ```
 
 Build the MyCardiograph monitoring server for your x86-windows platform
 
 ```bash
 cargo build --bin cardiograph --release --target x86_64-pc-windows-msvc
-# cp target/x86_64-pc-windows-msvc/release/cardiograph.exe releases/cardiograph-0.1.1-x86_64-pc-windows-msvc.exe
+# cp target/x86_64-pc-windows-msvc/release/cardiograph.exe releases/cardiograph-0.1.2-x86_64-pc-windows-msvc.exe
 ```
 
 Build the MyHeart monitoring client for armv7-linux platform
