@@ -17,7 +17,7 @@ Before executing the binary files for monitoring, please check all supported com
 
 The pre-compiled binary files are availeble at the [releases](https://github.com/norbertherbert/mycardiograph/releases) section of this repo.
 
-### installation on the monitoring server:
+### installation on the monitoring server
 
 ```bash
 # Download the pre-compiled server binary file for your x86-linux machine 
@@ -34,7 +34,7 @@ chmod +x cardiograph
 ./cardiograph --password asdf
 ```
 
-### installation on the embedded linux clients:
+### installation on the embedded linux clients
 
 ```bash
 # Download the pre-compiled client binary file for your armv7-linux machine 
@@ -56,7 +56,8 @@ If you want that your embedded Linux starts the application automatically create
 vim /etc/init.d/S99myheart
 ```
 
-... and the file shall include the following lines: 
+... and the file shall include the following lines:
+
 ```bash
 #!/bin/sh
 
@@ -65,6 +66,7 @@ vim /etc/init.d/S99myheart
 ```
 
 Then execute the following commands:
+
 ```bash
 chmod +x /etc/init.d/S99myheart
 ln -s /etc/init.d/S99myheart /etc/rcS.d/S99myheart

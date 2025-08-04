@@ -1,5 +1,6 @@
 [package]
 name = "cardiograph"
+default-run = "cardiograph"
 version = "0.1.1"
 edition = "2024"
 authors = ["Norbert Herbert <norbert.herbert@gmail.com>"]
@@ -17,12 +18,11 @@ sha2 = "0.10.9"
 #### logger
 tracing = "0.1.41"
 tracing-appender = "0.2.3"
-tracing-subscriber = { version = "0.3.19", features = ["env-filter", "fmt", "json"] }
+tracing-subscriber = { version = "0.3.19", features = ["env-filter", "fmt", "json", "time"] }
 
 derive_more = { version = "2.0.1", features =["from", "display"] }
-sysinfo = { version = "0.35.2", features =[] }
+sysinfo = { version = "0.36.1", features =[] }
 tokio = { version = "1.45.1", features = ["full"] }
-
 
 [[bin]]
 name = "myheart"

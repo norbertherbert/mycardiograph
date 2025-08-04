@@ -3,7 +3,7 @@ use cardiograph::logger;
 
 use aes_gcm::{Aes256Gcm, Key, Nonce};
 use aes_gcm::aead::{Aead, KeyInit};
-use chrono::Utc;
+use chrono::Local;
 use std::collections::HashMap;
 use std::net::UdpSocket;
 use std::sync::{Arc, Mutex};
@@ -17,7 +17,6 @@ use clap::Parser;
 use sha2::{Digest, Sha256};
 
 type DeviceStatusMap = Arc<Mutex<HashMap<String, DeviceStatus>>>;
-
 
 
 #[derive(Parser, Debug)]
@@ -143,7 +142,7 @@ fn main() -> std::io::Result<()> {
                                                         status.is_up = true;
 
                                                         let since_last = status.last_seen.elapsed();
-                                                        let was_down_since = (Utc::now() - since_last).format("%Y-%m-%dT%H:%M:%S");
+                                                        let was_down_since = (Local::now() - since_last).format("%Y-%m-%dT%H:%M:%S");
                                                         tracing::info!(
                                                             device_id=heartbeat_message.device_id, 
                                                             %was_down_since,
@@ -222,7 +221,7 @@ fn main() -> std::io::Result<()> {
                 if since_last > Duration::from_secs(status.heartbeat_interval) {
                    
                     if status.is_up {
-                        let last_seen = (Utc::now()-since_last).format("%Y-%m-%dT%H:%M:%S");
+                        let last_seen = (Local::now()-since_last).format("%Y-%m-%dT%H:%M:%S");
                         tracing::warn!(
                             device_id, 
                             %last_seen, 

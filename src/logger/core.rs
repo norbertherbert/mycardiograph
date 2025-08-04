@@ -8,6 +8,9 @@ use tracing_subscriber::{
 };
 use tracing_appender::{non_blocking::WorkerGuard, rolling::{RollingFileAppender, Rotation}};
 use clap::ValueEnum;
+use chrono::Local;
+use tracing_subscriber::fmt::time::FormatTime;
+use tracing_subscriber::fmt::format::Writer;
 
 #[derive(Debug)]
 pub struct LogConfig {
@@ -52,6 +55,30 @@ impl fmt::Display for LogLevel {
 
 
 
+
+
+
+// use time::{OffsetDateTime, format_description::well_known::Rfc3339};
+
+struct LocalTimer;
+
+// impl FormatTime for LocalTimer {
+//     fn format_time(&self, w: &mut Writer<'_>) -> fmt::Result {
+//         let now = OffsetDateTime::now_local()
+//             .unwrap_or_else(|_| OffsetDateTime::now_utc());
+//         write!(w, "{}", now.format(&Rfc3339).unwrap())
+//     }
+// }
+
+impl FormatTime for LocalTimer {
+    fn format_time(&self, w: &mut Writer<'_>) -> fmt::Result {
+        let now = Local::now();
+        // write!(w, "{}", now.format("%Y-%m-%dT%H:%M:%S"))
+        write!(w, "{}", now.format("%Y-%m-%dT%H:%M:%S%.3f%:z"))
+    }
+}
+
+
 pub fn init(log_config: &LogConfig) -> Result<WorkerGuard> {
 
     let log_config_rotation = Rotation::DAILY; // Rotation::HOURLY;
@@ -64,6 +91,7 @@ pub fn init(log_config: &LogConfig) -> Result<WorkerGuard> {
     let console_layer_targets = Targets::new().with_target(&app_name, console_level_filter);
     let console_layer = tracing_subscriber::fmt::layer()
         // .pretty()
+        .with_timer(LocalTimer)
         .with_target(false)
         .with_ansi(true)
         .with_writer(std::io::stdout)
@@ -75,6 +103,7 @@ pub fn init(log_config: &LogConfig) -> Result<WorkerGuard> {
     let (non_blocking_file_appender, file_log_guard) = tracing_appender::non_blocking(file_appender);
     let file_layer = tracing_subscriber::fmt::layer()
         .json()
+        .with_timer(LocalTimer)
         .with_target(false)
         .with_ansi(false)
         .with_writer(non_blocking_file_appender)
