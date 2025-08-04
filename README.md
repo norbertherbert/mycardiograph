@@ -61,8 +61,10 @@ vim /etc/init.d/S99myheart
 ```bash
 #!/bin/sh
 
-# path to your binary file
-/root/myheart &
+echo "Starting myheart application..."
+cd /root/
+/root/myheart > /dev/null 2>&1 &
+echo "myheart application started in background."
 ```
 
 Then execute the following commands:
