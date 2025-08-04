@@ -21,10 +21,10 @@ The pre-compiled binary files are availeble at the [releases](https://github.com
 
 ```bash
 # Download the pre-compiled server binary file for your x86-linux machine 
-curl -L https://github.com/norbertherbert/mycardiograph/releases/download/v0.1.1/cardiograph-0.1.1-x86_64-unknown-linux-gnu -o cardiograph
+curl -L https://github.com/norbertherbert/mycardiograph/releases/download/v0.1.2/cardiograph-0.1.2-x86_64-unknown-linux-gnu -o cardiograph
 
 # OR download the pre-compiled server binary file for your x86-windows machine 
-curl -L https://github.com/norbertherbert/mycardiograph/releases/download/v0.1.1/cardiograph-0.1.1-x86_64-pc-windows-msvc.exe  -o cardiograph.exe
+curl -L https://github.com/norbertherbert/mycardiograph/releases/download/v0.1.2/cardiograph-0.1.2-x86_64-pc-windows-msvc.exe  -o cardiograph.exe
 
 # Make the downloaded file executable
 chmod +x cardiograph
@@ -38,7 +38,7 @@ chmod +x cardiograph
 
 ```bash
 # Download the pre-compiled client binary file for your armv7-linux machine 
-curl -L https://github.com/norbertherbert/mycardiograph/releases/download/v0.1.1/myheart-0.1.1-armv7-unknown-linux-gnueabihf -o myheart
+curl -L https://github.com/norbertherbert/mycardiograph/releases/download/v0.1.1S/myheart-0.1.1-armv7-unknown-linux-gnueabihf -o myheart
 
 # Make the downloaded file executable
 chmod +x myheart
