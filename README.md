@@ -82,8 +82,10 @@ folder of the github repo and place them in the root's home folder next to the p
     sh ./install_myheart.sh
     ```
 
-- After this, you can use the `/etc/init.d/myheart` command with the `start|stop|restart|status` options.
-This offers you a convenient way to manage the `myheart` application.
+- After this, you can use the `/etc/init.d/myheart` command with the `start|stop|restart|status` options in a convenient way
+to manage the status of the app.
+
+- If you reboot the gateway, `myheaart` aapp will start automatically.
 
 ## Build
 
