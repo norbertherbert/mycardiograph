@@ -19,7 +19,7 @@ The pre-compiled binary files are availeble at the [releases](https://github.com
 
 ### installation on the monitoring server
 
-```bash
+```sh
 # Download the pre-compiled server binary file for your x86-linux machine 
 curl -L https://github.com/norbertherbert/mycardiograph/releases/download/v0.1.2/cardiograph-0.1.2-x86_64-unknown-linux-gnu -o cardiograph
 
@@ -36,7 +36,12 @@ chmod +x cardiograph
 
 ### installation on the embedded linux clients
 
-```bash
+```sh
+# Login to your gateway as a root user and makee sure yyou are in the root's home folder.
+root@Gw01:~# cd ~
+root@Gw01:~# pwd
+/root
+
 # Download the pre-compiled client binary file for your armv7-linux machine 
 curl -L https://github.com/norbertherbert/mycardiograph/releases/download/v0.1.1S/myheart-0.1.1-armv7-unknown-linux-gnueabihf -o myheart
 
@@ -45,43 +50,45 @@ chmod +x myheart
 
 # Run the client
 # Modify the 'device-id', 'server-ip' and 'password' params according to your environment
-./myheart --device-id OutdoorAP --server-ip 192.168.1.200 --password asdf
+./myheart --device-id Gw01 --server-ip 192.168.1.200 --password asdf
 ```
 
 ### autostart
 
-If you want that your embedded Linux starts the application automatically create a `/etc/init.d/S99myheart` file with the following commmand:
+If you want the `myheart` monitoring app to start automatically after system boot, please follow the instructions below:
 
-```bash
-vim /etc/init.d/S99myheart
-```
+- download the installation scripts from the [installation_scripts](https://github.com/norbertherbert/mycardiograph/tree/main/src/install_scripts)
+folder of the github repo and place them in the root's home folder next to the previosly downloaded
+`myheart` binary file. You should see the following files in your home folder:
 
-... and the file shall include the following lines:  
+    ```txt
+    root@Gw01:~# ls -l
+    total 1744
+    -rw-r--r-- 1 root root    1085 Aug  5 10:11 install_myheart.sh
+    -rw-r--r-- 1 root root 1773068 Aug  5 10:11 myheart
+    -rw-r--r-- 1 root root    1374 Aug  5 10:12 init_myheart.sh
+    -rw-r--r-- 1 root root    1721 Aug  5 10:13 uninstall_myheart.sh
+    ````
 
-- update the values of `--device-id` and `--server-ip` parameters according to your desired settinngs
-- you can execute `myheart --help` to see additional optional parameters
-- don't forget to add `> /dev/null 2>&1 &` to the end of the commannd!
+- Update the following line inside the `init_myheart.sh` script to define the parameters `myheart` starts with.
 
-```bash
-#!/bin/sh
-# Script: /etc/init.d/S99myheart
+    ```sh
+    DAEMON_ARGS="--device-id Gw01 --server-ip 192.168.1.200 --password asdf"
+    ```
 
-echo "Starting myheart monitoring client..."
-cd /root/
-/root/myheart --device-id Gw_01 --server-ip 192.168.1.200 --password asdf > /dev/null 2>&1 &
-echo "myheart monitoring client started in background."
-```
+- Execute the `install_myheart.sh` script.
 
-Then execute the following commands:
+    ```sh
+    sh ./install_myheart.sh
+    ```
 
-```bash
-chmod +x /etc/init.d/S99myheart
-ln -s /etc/init.d/S99myheart /etc/rcS.d/S99myheart
-```
-
-After that you caan reboot your system and check if the binary iss running...
+- After this, you can use the `/etc/init.d/myheart` command with the `start|stop|restart|status` options.
+This offers you a convenient way to manage the `myheart` application.
 
 ## Build
+
+This is optional. Prebuilt binary fiiles are shared at the [releases](https://github.com/norbertherbert/mycardiograph/releases)
+folder of the github repo.
 
 Build the MyCardiograph monitoring server for your `x86-linux` platform *(on an `x86-linux` platform)*
 
