@@ -56,15 +56,20 @@ If you want that your embedded Linux starts the application automatically create
 vim /etc/init.d/S99myheart
 ```
 
-... and the file shall include the following lines:
+... and the file shall include the following lines:  
+
+- update the values of `--device-id` and `--server-ip` parameters according to your desired settinngs
+- you can execute `myheart --help` to see additional optional parameters
+- don't forget to add `> /dev/null 2>&1 &` to the end of the commannd!
 
 ```bash
 #!/bin/sh
+# Script: /etc/init.d/S99myheart
 
-echo "Starting myheart application..."
+echo "Starting myheart monitoring client..."
 cd /root/
-/root/myheart > /dev/null 2>&1 &
-echo "myheart application started in background."
+/root/myheart --device-id Gw_01 --server-ip 192.168.1.200 --password asdf > /dev/null 2>&1 &
+echo "myheart monitoring client started in background."
 ```
 
 Then execute the following commands:
@@ -78,21 +83,21 @@ After that you caan reboot your system and check if the binary iss running...
 
 ## Build
 
-Build the MyCardiograph monitoring server for your x86-linux platform
+Build the MyCardiograph monitoring server for your `x86-linux` platform *(on an `x86-linux` platform)*
 
 ```bash
 cargo build --bin cardiograph --release --target x86_64-unknown-linux-gnu
 # cp target/x86_64-unknown-linux-gnu/release/cardiograph releases/cardiograph-0.1.2-x86_64-unknown-linux-gnu
 ```
 
-Build the MyCardiograph monitoring server for your x86-windows platform
+Build the MyCardiograph monitoring server for your `x86-windows` platform *(on an `x86-windows` platform)*
 
 ```bash
 cargo build --bin cardiograph --release --target x86_64-pc-windows-msvc
 # cp target/x86_64-pc-windows-msvc/release/cardiograph.exe releases/cardiograph-0.1.2-x86_64-pc-windows-msvc.exe
 ```
 
-Build the MyHeart monitoring client for armv7-linux platform
+Build the MyHeart monitoring client for `armv7-linux` platform *(on an `x86-linux` platform)*
 
 ```bash
 cargo install cross
